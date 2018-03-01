@@ -1,10 +1,51 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8"></meta>
-<title>Index</title>
-</head>
-<body>
-
-</body>
+	<head>
+		<meta charset="UTF-8"></meta>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+		<link href="/css/dashboard.css" rel="stylesheet" />
+		<title>Index</title>
+	</head>
+	<body>
+		<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+			<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Laura Auto Peças</a>
+		</nav>
+		<div class="container-fluid">
+			<div class="row">
+				<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+				 <div class="sidebar-sticky">
+				 	<ul class="nav flex-column">
+				 		<li class="nav-item">
+				 			<a class="nav-link active" href="#">
+                  				<span data-feather="shopping-bag"></span>Ordem de Compra<span class="sr-only">(current)</span>
+                			</a>
+				 		</li>
+				 		<li class="nav-item">
+				 			<a class="nav-link" href="/produto"><span data-feather="shopping-cart"></span>Produtos</a>
+				 		</li>
+				 		<li class="nav-item">
+				 			<a class="nav-link" href="#"><span data-feather="users"></span>Fornecedor</a>
+				 		</li>
+				 		<li class="nav-item">
+				 			<a class="nav-link" href="#"><span data-feather="user"></span>Representante</a>
+				 		</li>
+				 		<li class="nav-item">
+				 			<a class="nav-link" href="#"><span data-feather="truck"></span>Local</a>
+				 		</li>
+				 	</ul>
+				 </div>
+				</nav>
+			</div>
+		</div>
+		<div class="card-footer text-muted">
+			Souza System - 2018 - copyright &copy;
+		</div>
+		
+		<!-- Icons -->
+    	<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    	<script>
+      		feather.replace()
+    	</script>
+		
+	</body>
 </html>

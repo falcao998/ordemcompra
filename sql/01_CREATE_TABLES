@@ -1,0 +1,8 @@
+﻿create table produto(
+	id serial primary key,
+	codigo varchar(15) not null,
+	nome varchar(100) not null,
+	descricao text,
+	estoque_atual integer not null default 0,
+	estoque_minimo integer not null default 0
+);

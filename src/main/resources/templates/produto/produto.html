@@ -5,7 +5,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
 		<title>Produtos</title>
 	</head>
-	<body>
+	<body class="">
 		<div class="container">
 			<div class="table-responsive">
 				<table class="table table-bordered table-hover">
@@ -15,6 +15,7 @@
 							<th>Nome</th>
 							<th>Descrição</th>
 							<th>Estoque</th>
+							<th>Mínimo</th>
 							<th></th>
 							<th></th>
 						</tr>
@@ -24,7 +25,8 @@
 							<td th:text="${produto.codigo}"/>
 							<td th:text="${produto.nome}"/>
 							<td th:text="${produto.descricao}">-</td>
-							<td th:text="${produto.estoqueatual}"/>
+							<td th:text="${produto.estoqueAtual}"/>
+							<td th:text="${produto.estoqueMinimo}"/>
 							<td><button type="button" class="btn btn-success">Visualizar</button></td>
 							<td><button type="button" class="btn btn-danger">Excluir</button></td>
 						</tr>

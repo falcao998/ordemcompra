@@ -1,5 +1,6 @@
 package com.souzasystem.ordemcompra.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +25,12 @@ public class Produto {
 	private String descricao;
 	
 	@NotNull
-	private int estoqueatual;
+	@Column(name="estoque_atual")
+	private int estoqueAtual;
+	
+	@NotNull
+	@Column(name="estoque_minimo")
+	private int estoqueMinimo;
 
 	public String getCodigo() {
 		return codigo;
@@ -50,12 +56,20 @@ public class Produto {
 		this.descricao = descricao;
 	}
 
-	public int getEstoqueatual() {
-		return estoqueatual;
+	public int getEstoqueAtual() {
+		return estoqueAtual;
 	}
 
-	public void setEstoqueatual(int estoqueatual) {
-		this.estoqueatual = estoqueatual;
+	public void setEstoqueAtual(int estoqueAtual) {
+		this.estoqueAtual = estoqueAtual;
+	}
+
+	public int getEstoqueMinimo() {
+		return estoqueMinimo;
+	}
+
+	public void setEstoqueMinimo(int estoqueMinimo) {
+		this.estoqueMinimo = estoqueMinimo;
 	}
 
 	public Long getId() {
