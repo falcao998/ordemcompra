@@ -7,41 +7,52 @@
 		<title>Produtos</title>
 	</head>
 	<body>
+		
 		<div th:replace="navbar :: navbar"></div>
-		<div th:fragment="produtos">
-			<div class="container">
-				<div class="table-responsive">
-					<table class="table table-bordered table-hover">
-						<thead class="thead-dark">
-							<tr>
-								<th>Código</th>
-								<th>Nome</th>
-								<th>Descrição</th>
-								<th>Estoque</th>
-								<th>Mínimo</th>
-								<th></th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="produto : ${produtos}">
-								<td th:text="${produto.codigo}"/>
-								<td th:text="${produto.nome}"/>
-								<td th:text="${produto.descricao}">-</td>
-								<td th:text="${produto.estoqueAtual}"/>
-								<td th:text="${produto.estoqueMinimo}"/>
-								<td><button type="button" class="btn btn-success">Visualizar</button></td>
-								<td><button type="button" class="btn btn-danger">Excluir</button></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+		
+		<div class="container">
+			<form method="get" action="/produto/busca" class="form-inline my-2 my-lg-3 mr-lg-2">
+	            <div class="input-group">
+	            	<input name="busca" class="form-control" type="text" placeholder="Buscar por..." />
+	            	<button type="submit" class="btn btn-info">Procurar</button>
+	            </div>
+          </form>
+		</div>
+		
+		<div class="container">
+			<div class="table-responsive">
+				<table class="table table-bordered table-hover">
+					<thead class="thead-light">
+						<tr>
+							<th>Código</th>
+							<th>Nome</th>
+							<th>Descrição</th>
+							<th>Estoque</th>
+							<th>Mínimo</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="produto : ${produtos}">
+							<td th:text="${produto.codigo}"/>
+							<td th:text="${produto.nome}"/>
+							<td th:text="${produto.descricao}">-</td>
+							<td th:text="${produto.estoqueAtual}"/>
+							<td th:text="${produto.estoqueMinimo}"/>
+							<td><form method="get" action="/produto/busca"><button type="button" class="btn btn-success">Visualizar</button></form></td>
+							<td><form method="post" action="/produto/deletar/"><button type="button" class="btn btn-danger">Excluir</button></form></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
+		
 		<!-- Icons -->
     	<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     	<script>
       		feather.replace()
     	</script>
+    	
 	</body>
 </html>
