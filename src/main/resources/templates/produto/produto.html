@@ -41,8 +41,8 @@
 							<td th:text="${produto.descricao}">-</td>
 							<td th:text="${produto.estoqueAtual}"/>
 							<td th:text="${produto.estoqueMinimo}"/>
-							<td><form method="get" action="/produto/busca"><button type="button" class="btn btn-success">Visualizar</button></form></td>
-							<td><form method="post" action="/produto/deletar/"><button type="button" class="btn btn-danger">Excluir</button></form></td>
+							<td><button type="button" class="btn btn-success">Visualizar</button></td>
+							<td><button type="button" class="btn btn-danger" th:href="@{*/produto/deletar/(produto=@{produto})}">Excluir</button></td>
 						</tr>
 					</tbody>
 				</table>
