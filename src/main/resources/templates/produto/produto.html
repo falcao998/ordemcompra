@@ -4,7 +4,9 @@
 		<meta charset="UTF-8" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
 		<link href="/css/dashboard.css" rel="stylesheet" />
+		<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" 	crossorigin="anonymous"></script>
 		<title>Produtos</title>
+		
 	</head>
 	<body>
 		
@@ -34,15 +36,15 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="produto : ${produtos}">
+						<tr th:id="'produto'+${produto.id}" th:each="produto : ${produtos}">
 							<td hidden="true" th:text="${produto.id}"/>
 							<td th:text="${produto.codigo}"/>
 							<td th:text="${produto.nome}"/>
 							<td th:text="${produto.descricao}">-</td>
 							<td th:text="${produto.estoqueAtual}"/>
 							<td th:text="${produto.estoqueMinimo}"/>
-							<td><form method="get" action="/produto/busca"><button type="button" class="btn btn-success">Visualizar</button></form></td>
-							<td><form method="post" action="/produto/deletar/"><button type="button" class="btn btn-danger">Excluir</button></form></td>
+							<td><a class="btn btn-success">Editar</a></td>
+							<td><a id="aRemover" class="delete btn btn-danger">Remover</a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -53,7 +55,20 @@
     	<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     	<script>
       		feather.replace()
-    	</script>
+		</script>
+		
+		<script>
+		
+			$(document).ready(function() {
+	    		$("#aRemover").click(function() {
+	    			console.log($("#produto1").html());
+					/* $.post("/produto/deletar", function() {
+						
+					}); */
+				});
+			});
+    	
+		</script>
     	
 	</body>
 </html>

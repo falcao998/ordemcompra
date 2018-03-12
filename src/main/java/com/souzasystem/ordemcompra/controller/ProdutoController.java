@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.souzasystem.ordemcompra.model.Produto;
@@ -26,22 +25,31 @@ public class ProdutoController {
 	
 	@Autowired
 	private ProdutoRepository repository;
+	
+	private String urlListProduto = "produto/produto";
 
 	@RequestMapping(method=RequestMethod.POST)
-	@ResponseBody
 	public Produto salvar(@Valid @RequestBody Produto produto) {
 		return repository.save(produto);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/deletar")
-	@ResponseBody
-	public void deletar(@RequestBody Produto produto) {
+	public void deletar(@PathVariable Produto produto) {
 		repository.delete(produto.getId());
+	}
+	
+//---------------------------------------------------------------------------------------------
+//	Metodo pegar tem que ser refatorado para exibir a tela de EDIÇÃO
+	@RequestMapping(method=RequestMethod.GET, value="/{id}")
+	public ModelAndView pegar(@PathVariable String id){
+		ModelAndView model = new ModelAndView(urlListProduto);
+		model.addObject("produtos", repository.findOne(Long.valueOf(id)));
+		return model;
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView listar(){
-		ModelAndView model = new ModelAndView("produto/produto");
+		ModelAndView model = new ModelAndView(urlListProduto);
 		
 		Sort ordem = new Sort(Sort.Direction.ASC,"codigo");
 		Iterator<Produto> it = repository.findAll(ordem).iterator();
@@ -54,15 +62,9 @@ public class ProdutoController {
 		return model;
 	}
 	
-	@RequestMapping(method=RequestMethod.GET, value="/{id}")
-	@ResponseBody
-	public Produto pegar(@PathVariable String id){
-		return repository.findOne(Long.valueOf(id));
-	}
-	
 	@RequestMapping(method=RequestMethod.GET, value="/busca")
 	public ModelAndView buscar(@RequestParam("busca") String busca){
-		ModelAndView model = new ModelAndView("produto/produto");
+		ModelAndView model = new ModelAndView(urlListProduto);
 		
 		Sort ordem = new Sort(Sort.Direction.ASC,"codigo");
 		Iterator<Produto> it = repository.findBusca(busca.toUpperCase(), ordem).iterator();
