@@ -60,11 +60,11 @@
 			function remove(item) {
 				var tr = $(item).closest('tr');
 				var idProduto = tr.find("td:eq(0)").html();
-				console.log(idProduto.valueOf());
-				$.post("/produto/deletar",idProduto.valueOf());
-	    		// tr.fadeOut(400, function() {
-	    		// 	tr.remove();
-	    		// });
+				var body = {idProduto : idProduto};
+				tr.fadeOut(400, function() {
+	    		 	tr.remove();
+	    		});
+				$.post("/produto/deletar",body);
 	    	}
 		</script>
     	

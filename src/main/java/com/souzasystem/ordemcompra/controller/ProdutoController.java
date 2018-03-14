@@ -34,8 +34,10 @@ public class ProdutoController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/deletar")
-	public void deletar(@RequestBody String idProduto) {
+	public String deletar(@RequestParam("idProduto") String idProduto) {
 		repository.delete(Long.parseLong(idProduto));
+		
+		return urlListProduto;
 	}
 	
 //---------------------------------------------------------------------------------------------
