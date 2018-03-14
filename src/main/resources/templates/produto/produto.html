@@ -44,7 +44,7 @@
 							<td th:text="${produto.estoqueAtual}"/>
 							<td th:text="${produto.estoqueMinimo}"/>
 							<td><a class="btn btn-success">Editar</a></td>
-							<td><a id="aRemover" class="delete btn btn-danger">Remover</a></td>
+							<td><a onclick="remove(this)" class="delete btn btn-danger">Remover</a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -58,16 +58,15 @@
 		</script>
 		
 		<script>
-		
-			$(document).ready(function() {
-	    		$("#aRemover").click(function() {
-	    			console.log($("#produto1").html());
-					/* $.post("/produto/deletar", function() {
-						
-					}); */
-				});
-			});
-    	
+			function remove(item) {
+				var tr = $(item).closest('tr');
+				var idProduto = tr.find("td:eq(0)").html();
+				console.log(idProduto.valueOf());
+				$.post("/produto/deletar",idProduto.valueOf());
+	    		// tr.fadeOut(400, function() {
+	    		// 	tr.remove();
+	    		// });
+	    	}
 		</script>
     	
 	</body>

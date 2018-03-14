@@ -34,8 +34,8 @@ public class ProdutoController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/deletar")
-	public void deletar(@PathVariable Produto produto) {
-		repository.delete(produto.getId());
+	public void deletar(@RequestBody String idProduto) {
+		repository.delete(Long.parseLong(idProduto));
 	}
 	
 //---------------------------------------------------------------------------------------------
@@ -46,6 +46,7 @@ public class ProdutoController {
 		model.addObject("produtos", repository.findOne(Long.valueOf(id)));
 		return model;
 	}
+//-----------------------------------------------------------------------------------------
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView listar(){
