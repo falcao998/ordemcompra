@@ -26,33 +26,44 @@ public class ProdutoController {
 	@Autowired
 	private ProdutoRepository repository;
 	
+	private String urlListIndex = "produto/index";
 	private String urlListProduto = "produto/produto";
 
 	@RequestMapping(method=RequestMethod.POST)
 	public Produto salvar(@Valid @RequestBody Produto produto) {
 		return repository.save(produto);
 	}
-	
-	@RequestMapping(method=RequestMethod.POST, value="/deletar")
-	public String deletar(@RequestParam("idProduto") String idProduto) {
-		repository.delete(Long.parseLong(idProduto));
-		
-		return urlListProduto;
-	}
-	
 //---------------------------------------------------------------------------------------------
 //	Metodo pegar tem que ser refatorado para exibir a tela de EDIÇÃO
 	@RequestMapping(method=RequestMethod.GET, value="/{id}")
 	public ModelAndView pegar(@PathVariable String id){
-		ModelAndView model = new ModelAndView(urlListProduto);
+		
+		ModelAndView model = new ModelAndView(urlListIndex);
+		
 		model.addObject("produtos", repository.findOne(Long.valueOf(id)));
+		
 		return model;
 	}
 //-----------------------------------------------------------------------------------------
 	
+	@RequestMapping(method=RequestMethod.GET, value="form")
+	public ModelAndView form() {
+		
+		return new ModelAndView(urlListProduto);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="/deletar")
+	public String deletar(@RequestParam("idProduto") String idProduto) {
+		
+		repository.delete(Long.parseLong(idProduto));
+		
+		return urlListIndex;
+	}
+	
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView listar(){
-		ModelAndView model = new ModelAndView(urlListProduto);
+		
+		ModelAndView model = new ModelAndView(urlListIndex);
 		
 		Sort ordem = new Sort(Sort.Direction.ASC,"codigo");
 		Iterator<Produto> it = repository.findAll(ordem).iterator();
@@ -67,7 +78,8 @@ public class ProdutoController {
 	
 	@RequestMapping(method=RequestMethod.GET, value="/busca")
 	public ModelAndView buscar(@RequestParam("busca") String busca){
-		ModelAndView model = new ModelAndView(urlListProduto);
+		
+		ModelAndView model = new ModelAndView(urlListIndex);
 		
 		Sort ordem = new Sort(Sort.Direction.ASC,"codigo");
 		Iterator<Produto> it = repository.findBusca(busca.toUpperCase(), ordem).iterator();

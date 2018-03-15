@@ -1,0 +1,73 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+		<link href="/css/dashboard.css" rel="stylesheet" />
+		<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" 	crossorigin="anonymous"></script>
+		<title>Produtos</title>
+	</head>
+	<body>
+		
+		<div th:replace="navbar :: navbar"></div>
+		
+		<div class="container">
+			<form method="get" action="/produto/busca" class="form-inline my-2 my-lg-3 mr-lg-2">
+	            <div class="input-group">
+	            	<input name="busca" class="form-control" type="text" placeholder="Buscar por..." />
+					<button type="submit" class="btn btn-info">Procurar</button>
+					<a class="btn btn-outline-secondary" href="/produto/form">Criar</a>
+	            </div>
+          </form>
+		</div>
+		
+		<div class="container">
+			<div class="table-responsive">
+				<table class="table table-bordered table-hover">
+					<thead class="thead-light">
+						<tr>
+							<th>Código</th>
+							<th>Nome</th>
+							<th>Descrição</th>
+							<th>Estoque</th>
+							<th>Mínimo</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:id="'produto'+${produto.id}" th:each="produto : ${produtos}">
+							<td hidden="true" th:text="${produto.id}"/>
+							<td th:text="${produto.codigo}"/>
+							<td th:text="${produto.nome}"/>
+							<td th:text="${produto.descricao}">-</td>
+							<td th:text="${produto.estoqueAtual}"/>
+							<td th:text="${produto.estoqueMinimo}"/>
+							<td><a class="btn btn-success">Editar</a></td>
+							<td><a onclick="remove(this)" class="delete btn btn-danger">Remover</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<!-- Icons -->
+    	<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    	<script>
+      		feather.replace()
+		</script>
+		
+		<script>
+			function remove(item) {
+				var tr = $(item).closest('tr');
+				var idProduto = tr.find("td:eq(0)").html();
+				var body = {idProduto : idProduto};
+				tr.fadeOut(400, function() {
+	    		 	tr.remove();
+	    		});
+				$.post("/produto/deletar",body);
+	    	}
+		</script>
+    	
+	</body>
+</html>
