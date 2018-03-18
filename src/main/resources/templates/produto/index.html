@@ -16,7 +16,7 @@
 	            <div class="input-group">
 	            	<input name="busca" class="form-control" type="text" placeholder="Buscar por..." />
 					<button type="submit" class="btn btn-info">Procurar</button>
-					<a class="btn btn-outline-secondary" href="/produto/form">Criar</a>
+					<a class="btn btn-outline-secondary" href="/produto/form?idProduto=">Criar</a>
 	            </div>
           </form>
 		</div>
@@ -43,7 +43,7 @@
 							<td th:text="${produto.descricao}">-</td>
 							<td th:text="${produto.estoqueAtual}"/>
 							<td th:text="${produto.estoqueMinimo}"/>
-							<td><a class="btn btn-success">Editar</a></td>
+							<td><a th:href="@{/produto/form(idProduto=${produto.id})}" class="btn btn-success">Editar</a></td>
 							<td><a onclick="remove(this)" class="delete btn btn-danger">Remover</a></td>
 						</tr>
 					</tbody>
@@ -66,6 +66,11 @@
 	    		 	tr.remove();
 	    		});
 				$.post("/produto/deletar",body);
+	    	}
+			function editar(item) {
+				var tr = $(item).closest('tr');
+				var idProduto = tr.find("td:eq(0)").html();
+				$.get("/produto/form?idProduto="+idProduto);
 	    	}
 		</script>
     	

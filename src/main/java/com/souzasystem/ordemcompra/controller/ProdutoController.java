@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.souzasystem.ordemcompra.model.Produto;
 import com.souzasystem.ordemcompra.repository.ProdutoRepository;
@@ -27,13 +27,8 @@ public class ProdutoController {
 	private ProdutoRepository repository;
 	
 	private String urlListIndex = "produto/index";
-	private String urlListProduto = "produto/produto";
-
-	@RequestMapping(method=RequestMethod.POST)
-	public Produto salvar(@Valid @RequestBody Produto produto) {
-		return repository.save(produto);
-	}
-//---------------------------------------------------------------------------------------------
+	private String urlProduto = "produto/produto";
+	
 //	Metodo pegar tem que ser refatorado para exibir a tela de EDIÇÃO
 	@RequestMapping(method=RequestMethod.GET, value="/{id}")
 	public ModelAndView pegar(@PathVariable String id){
@@ -46,10 +41,26 @@ public class ProdutoController {
 	}
 //-----------------------------------------------------------------------------------------
 	
-	@RequestMapping(method=RequestMethod.GET, value="form")
-	public ModelAndView form() {
+	@RequestMapping(method=RequestMethod.POST)
+	public RedirectView salvar(@Valid Produto produto) {
 		
-		return new ModelAndView(urlListProduto);
+		repository.save(produto);
+		
+		return new RedirectView("/produto");
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="form")
+	public ModelAndView form(@RequestParam("idProduto") String idProduto) {
+		
+		ModelAndView model = new ModelAndView(urlProduto);
+		
+		if (idProduto.isEmpty()) {
+			model.addObject("produto", new Produto());
+		} else {
+			model.addObject("produto", repository.findOne(Long.valueOf(idProduto)));
+		}
+		
+		return model;
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/deletar")
@@ -67,7 +78,7 @@ public class ProdutoController {
 		
 		Sort ordem = new Sort(Sort.Direction.ASC,"codigo");
 		Iterator<Produto> it = repository.findAll(ordem).iterator();
-		List<Produto> produtos = new ArrayList<Produto>();
+		List<Produto> produtos = new ArrayList<>();
 		while(it.hasNext()) {
 			produtos.add(it.next());
 		}
@@ -83,7 +94,7 @@ public class ProdutoController {
 		
 		Sort ordem = new Sort(Sort.Direction.ASC,"codigo");
 		Iterator<Produto> it = repository.findBusca(busca.toUpperCase(), ordem).iterator();
-		List<Produto> produtos = new ArrayList<Produto>();
+		List<Produto> produtos = new ArrayList<>();
 		while(it.hasNext()) {
 			produtos.add(it.next());
 		}
