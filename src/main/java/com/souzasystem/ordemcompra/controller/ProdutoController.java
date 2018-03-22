@@ -9,7 +9,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,25 +27,19 @@ public class ProdutoController {
 	
 	private String urlListIndex = "produto/index";
 	private String urlProduto = "produto/produto";
-	
-//	Metodo pegar tem que ser refatorado para exibir a tela de EDIÇÃO
-	@RequestMapping(method=RequestMethod.GET, value="/{id}")
-	public ModelAndView pegar(@PathVariable String id){
-		
-		ModelAndView model = new ModelAndView(urlListIndex);
-		
-		model.addObject("produtos", repository.findOne(Long.valueOf(id)));
-		
-		return model;
-	}
-//-----------------------------------------------------------------------------------------
-	
+
 	@RequestMapping(method=RequestMethod.POST)
 	public RedirectView salvar(@Valid Produto produto) {
 		
-		repository.save(produto);
-		
-		return new RedirectView("/produto");
+		try{
+			repository.save(produto);
+			return new RedirectView("/produto");
+		}catch (Exception e) {
+			RedirectView redirect = new RedirectView("/form");
+			redirect.addStaticAttribute("produto", produto);
+			redirect.addStaticAttribute("error", e);
+			return redirect;
+		}
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, value="form")
