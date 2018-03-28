@@ -29,15 +29,15 @@ public class ProdutoController {
 	private String urlProduto = "produto/produto";
 
 	@RequestMapping(method=RequestMethod.POST)
-	public RedirectView salvar(@Valid Produto produto) {
+	public ModelAndView salvar(@Valid Produto produto) {
 		
 		try{
 			repository.save(produto);
-			return new RedirectView("/produto");
+			return new ModelAndView("redirect:/produto");
 		}catch (Exception e) {
-			RedirectView redirect = new RedirectView("/form");
-			redirect.addStaticAttribute("produto", produto);
-			redirect.addStaticAttribute("error", e);
+			ModelAndView redirect = new ModelAndView("redirect:/produto/form?idProduto=");
+			redirect.addObject("produto", produto);
+			redirect.addObject("error", e);
 			return redirect;
 		}
 	}
